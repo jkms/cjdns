@@ -1,12 +1,13 @@
-FROM alpine:3.2
-MAINTAINER Lars Gierth <larsg@systemli.org>
+FROM hypriot/rpi-alpine
+MAINTAINER John Stafford <john@jkms.me>
 
 RUN apk add --update nodejs bash python git build-base linux-headers
 
 ADD . /src
 
 RUN adduser -D -h /etc/cjdns -u 1000 cjdns \
-    && rm -rf /src/build_* && /src/do \
+    && rm -rf /src/build_* && cd /src \
+    && NO_TEST=1 Seccomp_NO=1 ./do && cd / \
     && cp /src/cjdroute /usr/bin \
     && cp -r /src/tools/* /usr/bin \
     && cp /src/makekeys \
