@@ -10,5 +10,7 @@ if [ ! -f "$CONF_DIR/cjdroute.conf" ]; then
   echo $conf > "$CONF_DIR/cjdroute.conf"
 fi
 
+sysctl -w net.ipv6.conf.all.disable_ipv6=0
+
 cjdroute --nobg < "$CONF_DIR/cjdroute.conf"
 exit $?
